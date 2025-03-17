@@ -154,3 +154,6 @@ const hobbies = ["Sports", "Cooking"];
 // hobbies = [];
 hobbies.push("Working");
 console.log(hobbies);
+
+// const list = document.querySelector("ul");
+// list.remove();
