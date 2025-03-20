@@ -1,7 +1,8 @@
 //   ./ 로 현재 디렉토리를 명시하는 것을 권장 
 //   /assets   public 폴더의 자산에 접근
 //   assets/  비추천 대부분의 번들러는 이를 노드 모듈이나 특별 구성된 경로로 해석하려고 시도
-import reactImg from '../../assets/react-core-concepts.png';
+// import reactImg from '../../assets/react-core-concepts.png';
+import reactImg from '../../assets/react_job.jpg';
 import'./Header.css';
 
 // crucial 결정적인 

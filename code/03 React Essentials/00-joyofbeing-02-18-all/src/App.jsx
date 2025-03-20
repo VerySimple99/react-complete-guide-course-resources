@@ -3,11 +3,11 @@
 
 import { useState } from "react"; // React Hooks
 
-import { CORE_CONCEPTS } from "./data.js";
+import { CORE_CONCEPTS } from "./data-with-examples.js";
+import { EXAMPLES } from "./data-with-examples.js";
 import Header from "./components/Header/Header.jsx";
 import CoreConcept from "./components/CoreConcept.jsx";
 import TabButton from "./components/TabButton.jsx";
-import { EXAMPLES } from "./data-with-examples.js";
 
 function App() {
   // 컴포넌트 함수 안의
@@ -16,7 +16,7 @@ function App() {
   // 상태가 변경되면 컴포넌트는 자동으로 재렌더링됩니다.
   // useState 는 항상 2개의 요소를 배열로 반환
   // const [selectedTopic, setSelectedTopic] = useState("Please click a button");
-  const [selectedTopic, setSelectedTopic] = useState("components");
+  const [selectedTopic, setSelectedTopic] = useState();
 
   // let tabContent = 'Please click a button';
   function handleSelect(selectedButton) {
@@ -28,6 +28,22 @@ function App() {
   }
   // 딱 한번만 실행
   console.log("APP COMPONENT EXECUTING");
+
+  //2 변수 활용
+  let tabContent = <p>Please select a topic</p>;
+
+  if (selectedTopic) {
+    tabContent = (
+      <div id="tab-content">
+        <h3>{EXAMPLES[selectedTopic].title}</h3>
+        <p>{EXAMPLES[selectedTopic].description}</p>
+        <pre>
+          <code>{EXAMPLES[selectedTopic].code}</code>
+        </pre>
+      </div>
+    );
+  }
+
   return (
     <div>
       <Header />
@@ -37,17 +53,21 @@ function App() {
           <h2>Core Concepts</h2>
           <ul>
             {/* title , description  과 같은 props 를 이용  */}
-            <CoreConcept
+            {/* <CoreConcept
               title={CORE_CONCEPTS[0].title}
               description={CORE_CONCEPTS[0].description}
               image={CORE_CONCEPTS[0].image}
-            />
+            /> */}
             {/* 아래와 같이 효율적으로 표현 할 수 있음
           javascript의  ... 연산자(스프레드 연산자)
           */}
-            <CoreConcept {...CORE_CONCEPTS[1]} />
+            {/* <CoreConcept {...CORE_CONCEPTS[1]} />
             <CoreConcept {...CORE_CONCEPTS[2]} />
-            <CoreConcept {...CORE_CONCEPTS[3]} />
+            <CoreConcept {...CORE_CONCEPTS[3]} /> */}
+            {/* map 을 이용해  더 동적이고 효율적으로 표현해본다 */}
+            {CORE_CONCEPTS.map((conceptItem) => (
+              <CoreConcept key={conceptItem.title} {...conceptItem} />
+            ))}
           </ul>
         </section>
         <section id="examples">
@@ -65,24 +85,33 @@ function App() {
             이벤트로부터 독립적인 함수는 어떻게 “구성 및 설정”할 수 있습니까? (예: 어떤 인자를 전달할지 정의하는 등)
             아래처럼 익명 또는 화살표 함수를 이용해 인자를 전달, 버튼을 구분하도록 함 
             */}
-            <TabButton onSelect={() => handleSelect("components")}>
+            <TabButton  onSelect={() => handleSelect("components")} isSelected={selectedTopic === 'components'}>
               Components
             </TabButton>
-            <TabButton onSelect={() => handleSelect("jsx")}>JSX</TabButton>
-            <TabButton onSelect={() => handleSelect("props")}>Props</TabButton>
-            <TabButton onSelect={() => handleSelect("state")}>State</TabButton>
+            <TabButton onSelect={() => handleSelect("jsx")}
+              isSelected={selectedTopic === 'jsx'}>JSX</TabButton>
+            <TabButton onSelect={() => handleSelect("props")}
+              isSelected={selectedTopic === 'props'}>Props</TabButton>
+            <TabButton onSelect={() => handleSelect("state")}
+              isSelected={selectedTopic === 'state'}>State</TabButton>
 
             {/* attribute 사용해도 됨 : 두 방법 모두 가능 */}
             {/* <TabButton label="Components"></TabButton> */}
           </menu>
           {/* {selectedTopic} */}
-          <div id="tab-content">
-            <h3>{EXAMPLES[selectedTopic].title}</h3>
-            <p>{EXAMPLES[selectedTopic].description}</p>
-            <pre>
-              <code>{EXAMPLES[selectedTopic].code}</code>
-            </pre>
-          </div>
+          {/* 1.삼항연산자로 처리하는 방법 2. 변수활용 */}
+          {/* {!selectedTopic ? (
+            <p>Please select a topic.</p>
+          ) : (
+            <div id="tab-content">
+              <h3>{EXAMPLES[selectedTopic].title}</h3>
+              <p>{EXAMPLES[selectedTopic].description}</p>
+              <pre>
+                <code>{EXAMPLES[selectedTopic].code}</code>
+              </pre>
+            </div>
+          )} */}
+          {tabContent}
         </section>
       </main>
     </div>

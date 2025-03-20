@@ -27,7 +27,7 @@
 // }
 
 // 이벤트 처리 연습
-export default function TabButton({ children, onSelect}) {
+export default function TabButton({ children, onSelect, isSelected}) {
   // 일반 JS 방식 (명령적)
   // document.querySelector('button').addEventListener('click',() => {});
   // react 방식 (선언적) 의도 명확, 높은 가독성과 유지보수성
@@ -39,7 +39,7 @@ export default function TabButton({ children, onSelect}) {
   console.log('TabButton COMPONENT EXECUTING');
   return (
     <li>
-      <button onClick={onSelect}>{children}</button>
+      <button className={isSelected ? 'active' : undefined} onClick={onSelect}>{children}</button>
     </li>
   );
 }

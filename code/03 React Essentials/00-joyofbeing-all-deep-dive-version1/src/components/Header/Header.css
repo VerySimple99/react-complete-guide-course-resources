@@ -1,0 +1,27 @@
+header {
+  text-align: center;
+  margin: 3rem 0;
+}
+
+header img {
+  height: 8rem;
+  width: 11rem;
+  object-fit: cover;
+}
+
+header h1 {
+  margin: 0;
+  font-family: "Roboto Condensed", sans-serif;
+  font-size: 5rem;
+  background: linear-gradient(40deg, #d2b48c, #c2a680, #bfa17a, #a68a64); /* 베이지 톤 그라데이션 */
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3)); /* 그림자 조정 */
+}
+
+header p {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #8c7a6b; /* 베이지 톤에 어울리는 텍스트 색상 */
+  font-family: "Roboto Condensed", sans-serif;
+}
