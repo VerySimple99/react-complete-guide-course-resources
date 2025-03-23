@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function Player({ initialName, symbol }) {
+export default function Player({ initialName, symbol, isActive }) {
   const [playerName, setPlayerName]=useState(initialName);
   const [isEditing, setIsEditing] = useState(false);
   // React의 상태 업데이트는 비동기적으로 일어납니다. 여러 상태 업데이트가 연속해서 발생할 때, 직접 참조하는 방식은 최신 상태를 보장하지 못할 수 있습니다.
@@ -25,7 +25,7 @@ export default function Player({ initialName, symbol }) {
   }
 
   return (
-    <li>
+    <li className={isActive ? 'active' : undefined}>
       <span className="player">
         {editablePlayerName}
         <span className="player-symbol">{symbol}</span>
