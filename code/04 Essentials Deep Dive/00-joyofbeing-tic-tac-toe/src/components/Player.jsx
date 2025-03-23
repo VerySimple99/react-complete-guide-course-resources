@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function Player({ initialName, symbol, isActive }) {
+export default function Player({ initialName, symbol, isActive, onChangeName }) {
   const [playerName, setPlayerName]=useState(initialName);
   const [isEditing, setIsEditing] = useState(false);
   // React의 상태 업데이트는 비동기적으로 일어납니다. 여러 상태 업데이트가 연속해서 발생할 때, 직접 참조하는 방식은 최신 상태를 보장하지 못할 수 있습니다.
@@ -11,6 +11,9 @@ export default function Player({ initialName, symbol, isActive }) {
     // 두 함수 모두 현재 isEditing state false 값을 이용하고 있음,,최신상태보장하지 않음. 아래처럼 함수 방식이 꼭 필요함 
     //함수형 업데이트는 항상 현재 상태를 매개변수로 받기 때문에 이전에 캡처된 값에 의존하지 않습니다.
     setIsEditing((editing) =>!editing);
+    if (isEditing) {
+    onChangeName(symbol, playerName);
+    }
   }
   
   function handleChange(event){
