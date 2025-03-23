@@ -56,9 +56,10 @@ function deriveGameBoard(gameTurns) {
       fristSquareSymbol === thirdSquareSymbol
     ) {
       winner = players[fristSquareSymbol];
+      break;
     }
-    return winner;
   }
+  return winner;
 }
 function App() {
   const [players, setPlayers] = useState(PLAYERS);
