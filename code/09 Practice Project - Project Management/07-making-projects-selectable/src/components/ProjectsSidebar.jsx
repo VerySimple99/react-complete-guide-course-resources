@@ -1,4 +1,4 @@
-import Button from './Button.jsx';
+import Button from "./Button.jsx";
 
 export default function ProjectsSidebar({
   onStartAddProject,
@@ -16,14 +16,23 @@ export default function ProjectsSidebar({
       </div>
       <ul className="mt-8">
         {projects.map((project) => {
-          let cssClasses = "w-full text-left px-2 py-1 rounded-sm my-1 hover:text-stone-200 hover:bg-stone-800";
+          let cssClasses =
+            "w-full text-left px-2 py-1 rounded-sm my-1 hover:text-stone-200 hover:bg-stone-800";
 
           if (project.id === selectedProjectId) {
-            cssClasses += ' bg-stone-800 text-stone-200'
+            cssClasses += " bg-stone-800 text-stone-200";
           } else {
-            cssClasses += ' text-stone-400'
+            cssClasses += " text-stone-400";
           }
+          /*    
+            return 키워드가 생략 가능한 경우는:
 
+            화살표 함수(arrow function)를 사용하고
+            함수 본문이 단일 표현식일 때
+            중괄호({})를 사용하지 않을 때
+
+            주의할 점 ⚠️
+            화살표 함수에서 중괄호를 사용하면 반드시 return 키워드가 필요합니다: */
           return (
             <li key={project.id}>
               <button
