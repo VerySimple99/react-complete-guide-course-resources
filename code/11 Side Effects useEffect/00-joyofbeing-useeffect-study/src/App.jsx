@@ -6,12 +6,15 @@ import Modal from "./components/Modal.jsx";
 import DeleteConfirmation from "./components/DeleteConfirmation.jsx";
 import logoImg from "./assets/logo.png";
 import { sortPlacesByDistance } from "./loc.js";
-
+const storedIds = JSON.parse(localStorage.getItem('selectedPlaces')) || [];
+const storedPlaces = storedIds.map((id) =>
+  AVAILABLE_PLACES.find((place) => place.id === id)
+);
 function App() {
   const modal = useRef();
   const selectedPlace = useRef();
   const [availablePlaces, setAvailablePlaces] = useState([]);
-  const [pickedPlaces, setPickedPlaces] = useState([]);
+  const [pickedPlaces, setPickedPlaces] = useState(storedPlaces);
   /* 
   이 코드가 무한 루프를 발생시키는 과정은 다음과 같습니다:
 컴포넌트가 렌더링됩니다.
@@ -88,7 +91,7 @@ avaScript 배열 메소드로, 배열 내 최소한 하나의 요소가 주어�
       // JSON.stringify 저장가능한 문자열로 변경
       localStorage.setItem(
         "selectedPlaces",
-        JSON.stringify(id, [...storedIds])
+        JSON.stringify([id, ...storedIds])
       );
     }
   }
@@ -98,6 +101,11 @@ avaScript 배열 메소드로, 배열 내 최소한 하나의 요소가 주어�
       prevPickedPlaces.filter((place) => place.id !== selectedPlace.current)
     );
     modal.current.close();
+    const storedIds = JSON.parse(localStorage.getItem('selectedPlaces')) || [];
+    localStorage.setItem(
+      'selectedPlaces',
+      JSON.stringify(storedIds.filter((id) => id !== selectedPlace.current))
+    );
   }
 
   return (

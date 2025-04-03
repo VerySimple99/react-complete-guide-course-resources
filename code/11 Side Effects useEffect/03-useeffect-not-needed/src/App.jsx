@@ -6,18 +6,25 @@ import Modal from './components/Modal.jsx';
 import DeleteConfirmation from './components/DeleteConfirmation.jsx';
 import logoImg from './assets/logo.png';
 import { sortPlacesByDistance } from './loc.js';
-
+// === 1
 const storedIds = JSON.parse(localStorage.getItem('selectedPlaces')) || [];
 const storedPlaces = storedIds.map((id) =>
   AVAILABLE_PLACES.find((place) => place.id === id)
 );
-
+// === 
 function App() {
   const modal = useRef();
   const selectedPlace = useRef();
   const [availablePlaces, setAvailablePlaces] = useState([]);
   const [pickedPlaces, setPickedPlaces] = useState(storedPlaces);
+// === 2
+/* 
+실행 위치 📍 - // === 1은 모듈 로드 시점에 한 번만 실행, // === 2는 컴포넌트 마운트 후 실행
+비동기성 ⌛ - // === 1은 동기적 작업, // === 2는 비동기적 작업
+상태 업데이트 💫 - // === 1은 상태를 직접 업데이트하지 않고 초기값으로만 사용, // === 2는 상태를 업데이트
+환경 의존성 🌐 - // === 1은 단순히 localStorage 데이터만 사용, // === 2는 브라우저의 geolocation API에 의존
 
+*/
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
       const sortedPlaces = sortPlacesByDistance(
