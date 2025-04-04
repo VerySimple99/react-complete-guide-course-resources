@@ -6,13 +6,14 @@ import Modal from "./components/Modal.jsx";
 import DeleteConfirmation from "./components/DeleteConfirmation.jsx";
 import logoImg from "./assets/logo.png";
 import { sortPlacesByDistance } from "./loc.js";
-const storedIds = JSON.parse(localStorage.getItem('selectedPlaces')) || [];
+const storedIds = JSON.parse(localStorage.getItem("selectedPlaces")) || [];
 const storedPlaces = storedIds.map((id) =>
   AVAILABLE_PLACES.find((place) => place.id === id)
 );
 function App() {
-  const modal = useRef();
+  //const modal = useRef();
   const selectedPlace = useRef();
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const [availablePlaces, setAvailablePlaces] = useState([]);
   const [pickedPlaces, setPickedPlaces] = useState(storedPlaces);
   /* 
@@ -66,12 +67,12 @@ DOM 조작
   }, []); // 반드시 필요!. 빈 배열은 컴포넌트가 마운트될 때 한 번만 실행됨을 의미합니다
 
   function handleStartRemovePlace(id) {
-    modal.current.open();
+    setModalIsOpen(true);
     selectedPlace.current = id;
   }
 
   function handleStopRemovePlace() {
-    modal.current.close();
+    setModalIsOpen(false);
   }
   /* 
 avaScript 배열 메소드로, 배열 내 최소한 하나의 요소가 주어진 조건을 만족하는지 확인합니다. 하나라도 조건을 만족하면 true를, 아무것도 만족하지 않으면 false를 반환합니다.
@@ -100,17 +101,18 @@ avaScript 배열 메소드로, 배열 내 최소한 하나의 요소가 주어�
     setPickedPlaces((prevPickedPlaces) =>
       prevPickedPlaces.filter((place) => place.id !== selectedPlace.current)
     );
-    modal.current.close();
-    const storedIds = JSON.parse(localStorage.getItem('selectedPlaces')) || [];
+    //modal.current.close();
+    setModalIsOpen(false);
+    const storedIds = JSON.parse(localStorage.getItem("selectedPlaces")) || [];
     localStorage.setItem(
-      'selectedPlaces',
+      "selectedPlaces",
       JSON.stringify(storedIds.filter((id) => id !== selectedPlace.current))
     );
   }
 
   return (
     <>
-      <Modal ref={modal}>
+      <Modal open={modalIsOpen} onClose={handleStopRemovePlace}>
         <DeleteConfirmation
           onCancel={handleStopRemovePlace}
           onConfirm={handleRemovePlace}
