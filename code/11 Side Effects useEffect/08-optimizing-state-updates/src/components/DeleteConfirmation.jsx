@@ -15,7 +15,7 @@ export default function DeleteConfirmation({ onConfirm, onCancel }) {
       console.log('Cleaning up timer');
       clearTimeout(timer);
     };
-  }, [onConfirm]);
+  }, [onConfirm]); // 의존성 배열 요소로 onConfirm 을 넣는 이유는 App.jsx 하단부에 설명 있음 
 
   return (
     <div id="delete-confirmation">
